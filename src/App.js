@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import List from './components/List'
+import Form from './components/Form'
 
-function App() {
+const App = () => {
+  const [data, setData] = useState([])
+
+  useEffect( () => {
+    fetch("http://localhost:3001/posts")
+    .then(res => res.json())
+    .then(res => setData(res) )
+  }, [])
+
+  const addData = e => setData(data.concat(e))
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App container mt-5">
+      <Form addData={addData} />
+      <List data={data} />
     </div>
-  );
+  )
 }
 
 export default App;
