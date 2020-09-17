@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import List from './components/List'
 import Form from './components/Form'
+import Message from './components/Message'
 
 const App = () => {
   const [data, setData] = useState([])
+  const [message, setMessage] = useState({type: "", text: ""})
 
   useEffect( () => {
     fetch("http://localhost:3001/posts")
@@ -15,7 +17,8 @@ const App = () => {
 
   return (
     <div className="App container mt-5">
-      <Form addData={addData} />
+      <Message message={{...message}} />
+      <Form addData={addData} setMessage={setMessage} />
       <List data={data} />
     </div>
   )
